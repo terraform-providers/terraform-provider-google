@@ -261,6 +261,7 @@ func resourceContainerCluster() *schema.Resource {
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+									"management": schemaManagement,
 									"oauth_scopes": {
 										Type:             schema.TypeList,
 										Optional:         true,
@@ -1903,6 +1904,7 @@ func expandAutoProvisioningDefaults(configured interface{}, d *schema.ResourceDa
 	config := l[0].(map[string]interface{})
 
 	return &containerBeta.AutoprovisioningNodePoolDefaults{
+		Management:     expandManagement(config["management"]),
 		OauthScopes:    convertStringArr(config["oauth_scopes"].([]interface{})),
 		ServiceAccount: config["service_account"].(string),
 	}
@@ -2222,6 +2224,7 @@ func flattenClusterAutoscaling(a *containerBeta.ClusterAutoscaling) []map[string
 
 func flattenAutoProvisioningDefaults(a *containerBeta.AutoprovisioningNodePoolDefaults) []map[string]interface{} {
 	r := make(map[string]interface{})
+	r["management"] = flattenManagement(a.Management)
 	r["oauth_scopes"] = a.OauthScopes
 	r["service_account"] = a.ServiceAccount
 
