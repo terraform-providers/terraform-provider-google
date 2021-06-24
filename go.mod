@@ -26,6 +26,7 @@ require (
 	golang.org/x/tools v0.1.3 // indirect
 	google.golang.org/api v0.48.0
 	google.golang.org/grpc v1.38.0
+	gopkg.in/netaddr.v1 v1.5.1
 )
 
 go 1.16
